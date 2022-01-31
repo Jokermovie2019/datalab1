@@ -1,4 +1,5 @@
 import csv
+from operator import truediv
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
@@ -10,9 +11,10 @@ with open('BigData2016.csv', newline='') as csvfile:
         days_x.append(i)
 
     class Station():
-        def __init__(self, stid):
+        def __init__(self, stid, index):
             self.stid = stid
             self.max_list = []
+            self.index = index
             
 
         def fill_list(self,row):
@@ -22,23 +24,48 @@ with open('BigData2016.csv', newline='') as csvfile:
                 else:
                     self.max_list.append(self.max_list[-1])
         
-    ard2 = Station("ARD2")
-    beav = Station("BEAV")
-    bois = Station("BOIS")
-    cent = Station("CENT")
-    nrmn = Station("NRMN")
-    stil = Station("STIL")
-    tish = Station("TISH")
-    tuln = Station("TULN")
-    wood = Station("WOOD")
+    ard2 = Station("ARD2", 1)
+    beav = Station("BEAV", 2)
+    bois = Station("BOIS", 3)
+    cent = Station("CENT", 4)
+    nrmn = Station("NRMN", 5)
+    stil = Station("STIL", 6)
+    tish = Station("TISH", 7)
+    tuln = Station("TULN", 8)
+    wood = Station("WOOD", 9)
 
     stations = [ard2, beav, bois, cent, nrmn, stil, tish, tuln, wood]
 
     for row in reader:
         for station in stations:
             station.fill_list(row)
+
+
+    input("Welcome to weather charts {press any key to continue}")
+    choosing = "true"
+    chosen = []
+    print("stations: /n [1]ard2 /n [2]beav /n [3]bois /n [4]cent /n [5]nrmn /n [6]stil /n [7]tish /n [8]tuln /n [9]wood")
+    while choosing == "true":  
+        choice = input("which station do you wanna graph? -> ")
+        if choice in (1, 2, 3, 4, 5, 6, 7, 8, 9):
+            for station in stations:
+                if choice == station.index:
+                    chosen.append(station)
+        elif choice == 10:
+            choosing == "false"
+            for station in chosen:
+                plt.plot(days_x, station.max_list, label = station.stid)
+        else:
+            print("not a choice silly head ;-)")
+
+        print("stations: /n [1]ard2 /n [2]beav /n [3]bois /n [4]cent /n [5]nrmn /n [6]stil /n [7]tish /n [8]tuln /n [9]wood")
+        print("[10]plot chosen stations")
+
+
+
     for station in stations:
         plt.plot(days_x, station.max_list)
+
 
 plt.xlabel('day of the year')
 plt.ylabel('tempurature in degrees')
