@@ -44,27 +44,24 @@ with open('BigData2016.csv', newline='') as csvfile:
     input("Welcome to weather charts {press any key to continue}")
     choosing = "true"
     chosen = []
-    print("stations: /n [1]ard2 /n [2]beav /n [3]bois /n [4]cent /n [5]nrmn /n [6]stil /n [7]tish /n [8]tuln /n [9]wood")
+    print("stations: [1]ard2 [2]beav [3]bois [4]cent [5]nrmn [6]stil [7]tish [8]tuln [9]wood")
     while choosing == "true":  
-        choice = input("which station do you wanna graph? -> ")
+        choice = int(input("which station do you wanna graph? -> "))
         if choice in (1, 2, 3, 4, 5, 6, 7, 8, 9):
             for station in stations:
                 if choice == station.index:
                     chosen.append(station)
         elif choice == 10:
-            choosing == "false"
+            choosing = "false"
             for station in chosen:
                 plt.plot(days_x, station.max_list, label = station.stid)
         else:
             print("not a choice silly head ;-)")
 
-        print("stations: /n [1]ard2 /n [2]beav /n [3]bois /n [4]cent /n [5]nrmn /n [6]stil /n [7]tish /n [8]tuln /n [9]wood")
+        print("stations: [1]ard2 [2]beav [3]bois [4]cent [5]nrmn [6]stil [7]tish [8]tuln [9]wood")
         print("[10]plot chosen stations")
 
 
-
-    for station in stations:
-        plt.plot(days_x, station.max_list)
 
 
 plt.xlabel('day of the year')
